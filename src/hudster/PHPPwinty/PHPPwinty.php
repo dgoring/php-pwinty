@@ -102,7 +102,7 @@ class PHPPwinty {
 			return array();
 		}
 
-		echo $curl_request_info["http_code"] ;
+		#echo $curl_request_info["http_code"] ;
 
 		$data = json_decode($result_text, true);
 		return $data;
@@ -295,13 +295,16 @@ class PHPPwinty {
 	* @return array The order submission status
     * @access public
     */
-	function addPhoto($orderId, $type, $url, $copies, $sizing, $priceToUser, $md5Hash, $file) {
+	function addPhoto($orderId, $type, $url, $copies, $sizing, $priceToUser = null, $md5Hash = null, $file = null) {
 		$data = array(
 			"type" => $type,
 			"url" => $url,
 			"copies" => $copies,
 			"sizing" => $sizing
 		);
+		if ($priceToUser) $data['priceToUser'] = $priceToUser;
+		if ($md5Hash) $data['md5Hash'] = $md5Hash;
+		if ($file) $data['file'] = $file;
 
 		$str_data = json_encode($data);
 
