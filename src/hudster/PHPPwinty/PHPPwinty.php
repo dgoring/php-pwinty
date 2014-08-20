@@ -149,7 +149,7 @@ class PHPPwinty {
 				$this->last_error = $data["errorMessage"];
 				return 0;
 			} else {
-				return $data["id"];
+				return $data;
 			}
 		} else {
 			return 0;
