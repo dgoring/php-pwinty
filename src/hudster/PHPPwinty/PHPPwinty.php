@@ -38,9 +38,9 @@ class PHPPwinty {
 	function __construct($options) {
 		$this->opt = $options;
 		if ($this->opt['api'] == "production") {
-			$this->api_url = "https://api.pwinty.com/v2";
+			$this->api_url = "https://api.pwinty.com/v2.1";
 		} else {
-			$this->api_url = "https://sandbox.pwinty.com/v2";
+			$this->api_url = "https://sandbox.pwinty.com/v2.1";
 		}
 	}
 
@@ -149,7 +149,7 @@ class PHPPwinty {
 				$this->last_error = $data["errorMessage"];
 				return 0;
 			} else {
-				return $data["id"];
+				return $data;
 			}
 		} else {
 			return 0;
@@ -319,6 +319,36 @@ class PHPPwinty {
 		} else {
 			return 0;
 		}
+	}
+
+
+
+    /**
+    * Add a photos to an order
+    *
+    * @param  string $orderId the id of the order the photo is being added to
+    * @param  array  $images array of image data
+	* @return array  The order submission status
+    * @access public
+    */
+	function addPhotos($orderId, $images) {
+		//$type, $url, $copies, $sizing, $priceToUser = null, $md5Hash = null, $file = null
+		var_dump($images);
+		if (is_array($images)) {
+			$str_data = json_encode($images);
+			$data = $this->apiCall("/Orders/".$orderId."/Photos/Batch", $str_data, "POST");
+			if (is_array($data)) {
+				if (isset($data["error"])) {
+					$this->last_error = $data["error"];
+					return 0;
+				} else {
+					return $data;
+				}
+			} else {
+				return 0;
+			}
+		}
+		return 0;
 	}
 
 
