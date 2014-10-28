@@ -333,7 +333,6 @@ class PHPPwinty {
     */
 	function addPhotos($orderId, $images) {
 		//$type, $url, $copies, $sizing, $priceToUser = null, $md5Hash = null, $file = null
-		var_dump($images);
 		if (is_array($images)) {
 			$str_data = json_encode($images);
 			$data = $this->apiCall("/Orders/".$orderId."/Photos/Batch", $str_data, "POST");
