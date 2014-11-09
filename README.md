@@ -10,7 +10,7 @@ Based on an implementation of API v1 by Brad Pineau
 
 Add the following to the require section of your composer.json file:
 
-    "hudster/PHPPwinty": "dev-master"
+    "pwinty/PHPPwinty": "dev-master"
 
 ### Without Composer
 
@@ -20,7 +20,7 @@ Add this line to your application:
 
 Declare a new instance of PHPPwinty
 
-    use hudster\PHPPwinty\PHPPwinty;
+    use pwinty\PHPPwinty\PHPPwinty;
 
     $options = array(
         'api'        => 'sandbox',
