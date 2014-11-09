@@ -1,6 +1,6 @@
 {
-    "name": "hudster/PHPPwinty",
-    "description": "PHP API wrapper for Pwinty.com",
+    "name": "pwinty/PHPPwinty",
+    "description": "PHP API library for Pwinty.com",
     "keywords": ["pwinty", "pwinty.com", "api"],
     "authors": [
         {
@@ -11,11 +11,16 @@
             "name": "Dan Hudster",
             "homepage": "https://github.com/hudster",
             "role": "Developer"
+        },
+        {
+            "name": "Andy Wright",
+            "homepage": "https://github.com/atwright147",
+            "role": "Developer"
         }
     ],
     "autoload": {
         "psr-0" : {
-            "hudster\\PHPPwinty" : "src/"
+            "pwinty\\PHPPwinty" : "src/"
         }
     }
 }

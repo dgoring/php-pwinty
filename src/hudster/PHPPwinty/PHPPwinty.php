@@ -5,7 +5,7 @@
  *
  *
  * @author v2 Dan Huddart 
- * @see https://github.com/hudster
+ * @see https://github.com/Pwinty/PHPPwinty
  * @version 2.0
  * @access public
  *
@@ -23,7 +23,7 @@
  *
  */
 
-namespace hudster\PHPPwinty;
+namespace pwinty\PHPPwinty;
 
 class PHPPwinty {
 	var $opt = array();
