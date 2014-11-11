@@ -1,5 +1,5 @@
 {
-    "name": "pwinty/PHPPwinty",
+    "name": "pwinty/php-pwinty",
     "description": "PHP API library for Pwinty.com",
     "keywords": ["pwinty", "pwinty.com", "api"],
     "authors": [
@@ -20,7 +20,7 @@
     ],
     "autoload": {
         "psr-0" : {
-            "pwinty\\PHPPwinty" : "src/"
+            "pwinty\\php-pwinty" : "src/"
         }
     }
 }
