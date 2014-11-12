@@ -1,6 +1,6 @@
 {
     "name": "pwinty/php-pwinty",
-    "description": "PHP API library for Pwinty.com",
+    "description": "PHP API wrapper for Pwinty.com",
     "keywords": ["pwinty", "pwinty.com", "api"],
     "authors": [
         {
