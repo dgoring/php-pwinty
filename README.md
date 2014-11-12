@@ -1,6 +1,6 @@
 # PHP Pwinty
 
-A PHP implementation of the Pwinty HTTP API v2
+A PHP implementation of the Pwinty HTTP API v2.1
 
 Based on an implementation of API v1 by Brad Pineau
 
@@ -10,24 +10,24 @@ Based on an implementation of API v1 by Brad Pineau
 
 Add the following to the require section of your composer.json file:
 
-    "pwinty/PHPPwinty": "dev-master"
+    "pwinty/php-pwinty": "dev-master"
 
 ### Without Composer
 
 Add this line to your application:
 
-    require_once("/PHPPwinty/PHPPwinty.php");
+    require_once("/pwinty/php-pwinty.php");
 
-Declare a new instance of PHPPwinty
+Declare a new instance of php-pwinty
 
-    use pwinty\PHPPwinty\PHPPwinty;
+    use pwinty\PhpPwinty;
 
-    $options = array(
+    $config = array(
         'api'        => 'sandbox',
         'merchantId' => 'xxxxxxxxxxxxxxxxx',
         'apiKey'     => 'xxxxxxxxxxxxxxxxx'
     );
-    $pwinty = new PHPPwinty($options);
+    $pwinty = new PhpPwinty($config);
 
 ## Example Usage
 
