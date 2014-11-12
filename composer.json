@@ -20,7 +20,7 @@
     ],
     "autoload": {
         "psr-0" : {
-            "pwinty\\php-pwinty" : "src/"
+            "pwinty\\" : "src/"
         }
     }
 }

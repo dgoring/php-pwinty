@@ -4,8 +4,10 @@
  * Originally developed by Brad Pineau for Picisto.com. Updated to API Version 2 by Dan Huddart. Released to public under Creative Commons.
  *
  *
- * @author v2 Dan Huddart 
- * @see https://github.com/Pwinty/PHPPwinty
+ * @author v1 Brad Pineau
+ * @author v2 Dan Huddart
+ * @author v2.1 Andy Wright
+ * @see https://github.com/pwinty
  * @version 2.0
  * @access public
  *
@@ -23,9 +25,9 @@
  *
  */
 
-namespace pwinty\PHPPwinty;
+namespace pwinty;
 
-class PHPPwinty {
+class PhpPwinty {
 	var $opt = array();
 	var $api_url = "";
 	var $last_error = "";
