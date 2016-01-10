@@ -115,6 +115,7 @@ class PhpPwinty {
     * Creates a new order
     *
     * @param string $recipientName Who the order should be addressed to
+    * @param string $email The email address of the recipient (optional on create, needed by submit)
     * @param string $address1 1st line of recipient address (optional on create, needed by submit)
     * @param string $address2 2nd line of recipient address (optional)
     * @param string $addressTownOrCity Town or City in the address (optional on create, needed by submit)
@@ -128,9 +129,10 @@ class PhpPwinty {
     * @return string The newly created order id
     * @access public
     */
-	function createOrder($recipientName, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $countryCode, $destinationCountryCode, $useTrackedShipping, $payment, $qualityLevel) {
+	function createOrder($recipientName, $email, $address1, $address2, $addressTownOrCity, $stateOrCounty, $postalOrZipCode, $countryCode, $destinationCountryCode, $useTrackedShipping, $payment, $qualityLevel) {
 		$data = array(
 			"recipientName" => $recipientName,
+			"email" => $email,
 			"address1" => $address1,
 			"address2" => $address2,
 			"addressTownOrCity" => $addressTownOrCity,
