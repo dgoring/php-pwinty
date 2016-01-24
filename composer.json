@@ -23,5 +23,8 @@
         "psr-0" : {
             "pwinty\\" : "src/"
         }
+    },
+    "require": {
+        "phpunit/phpunit": "^5.1"
     }
 }
