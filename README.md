@@ -53,6 +53,7 @@ Orders
     //creates a new order
     $order = $pwinty->createOrder(
         "Chuck Norris",     //name
+        "chuck@norris.com", //email address
         "123 Some Road",    //address1
         "Some place",       //address 2
         "Some town",        //town
