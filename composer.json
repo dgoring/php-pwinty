@@ -1,5 +1,5 @@
 {
-    "name": "dgoring/PHPPwinty",
+    "name": "dgoring/php-pwinty",
     "description": "PHP API wrapper for Pwinty.com",
     "keywords": ["pwinty", "pwinty.com", "api"],
     "license": "CC-BY-3.0",
