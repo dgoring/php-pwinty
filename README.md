@@ -6,115 +6,110 @@ Based on an implementation of API v1 by Brad Pineau
 
 ## Installation
 
-### With Composer
+### Composer
 
 Add the following to the require section of your composer.json file:
 
-    "pwinty/php-pwinty": "dev-master"
-
-### Without Composer
-
-Add this line to your application:
-
-    require_once("/pwinty/php-pwinty.php");
+    "dgoring/php-pwinty": "dev-master"
 
 Declare a new instance of php-pwinty
-
-    use pwinty\PhpPwinty;
 
     $config = array(
         'api'        => 'sandbox',
         'merchantId' => 'xxxxxxxxxxxxxxxxx',
         'apiKey'     => 'xxxxxxxxxxxxxxxxx'
     );
-    $pwinty = new PhpPwinty($config);
+    $pwinty = new Pwinty\Connnection($config);
 
 ## Example Usage
 
 Catalogue
 
-    $catalogue = $pwinty->getCatalogue(
+    $catalogue = $pwinty->catalogue(
         "GB",               //country code
         "Pro"               //quality
     );
 
 Countries
 
-    $countries = $pwinty->getCountries();   
+    $countries = $pwinty->countries();
 
 Orders
-
     //gets all orders
-    $order = $pwinty->getOrder(); 
+    $orders = $pwinty->orders()->get();
 
     //gets one order
-    $order = $pwinty->getOrderStatus("1234"); 
+    $order = $pwinty->orders()->find( 123 );
 
     //creates a new order
-    $order = $pwinty->createOrder(
-        "Chuck Norris",     //name
-        "chuck@norris.com", //email address
-        "123 Some Road",    //address1
-        "Some place",       //address 2
-        "Some town",        //town
-        "Some state",       //state
-        "12345",            //postcode or zip
-        "GB",               //country code
-        "GB",               //destination code
-        true,               //tracked shipping
-        "InvoiceMe",        //payment method
-        "Pro"               //quality
+    $order = $pwinty->orders()->create(
+        'name'                   => 'Chuck Norris',
+        'email'                  => 'chuck@norris.com',
+        'address_1'              => '123 Some Road',
+        'address_2'              => 'Some place',
+        'town'                   => 'Some town',
+        'state'                  => 'Some state',
+        'postalOrZipCode'        => '12345',
+        'countryCode'            => 'GB',
+        'destinationCountryCode' => 'GB',
+        'useTrackedShipping'     => true,
+        'payment'                => 'InvoiceMe',
+        'qualityLevel'           => 'Pro'
     );
 
     //updates an order
-    $order = $pwinty->updateOrder(
-        "1234",             //order id
-        "Chuck Norris",     //name
-        "123 Some Road",    //address1
-        "Some place",       //address 2
-        "Some town",        //town
-        "Some state",       //state
-        "12345",            //postcode or zip
-    );
+    $order = $pwinty->orders()->find( 123 );
+
+    $order->name = 'Bob';
+
+    $order = $pwinty->assign(array(
+        'name'                   => 'Chuck Norris',
+        'email'                  => 'chuck@norris.com',
+        'address_1'              => '123 Some Road',
+        'address_2'              => 'Some place',
+        'town'                   => 'Some town',
+        'state'                  => 'Some state',
+        'postalOrZipCode'        => '12345',
+    ));
+
+    $order->save();
 
     //change order status
-    $pwinty->updateOrderStatus(
-        "1234,              //orderid
-        "Cancelled"         //status
-    );
+    $order = $pwinty->orders()->find( 123 );
 
-    //get order status
-    $order = $pwinty->getOrderStatus(
-        "1234"              //order id
+    $pwinty->submit(
+        'Cancelled'  //status
     );
 
 Photos
-    
+
     //gets information about photos for an order
-    $photos = $pwinty->getPhotos(
-        "1234"              //order id
-    );
+    $order = $pwinty->orders()->find( 123 );
+
+    $photos = $order->photos()->get();
 
     //gets information about a single photo
-    $photo = $pwinty->getPhotos(
-        "1234",             //order id
-        "123456"            //photo id
-    );
+    $order = $pwinty->orders()->find( 123 );
+
+    $photo = $order->photos()->find( 123 );
 
     //adds a photo
-    $pwinty->addPhoto(
-        "1234",                             //order id
-        "4x6",                              //print size
-        "http://www.mysite.com/photo.jpg",  //image url
-        "1",                                //print quantity
-        "ShrinkToFit",                      //resize method
-        "2000",                             //price to user
-        "811cc87f4f77d6c33d638f9def39473b", //md5 hash
-        "ewhweo42ufh2woed45f2sdf4yt5sdufw"  //file
-    );                              
+    $order = $pwinty->orders()->find( 123 );
+
+    $photo = $order->photos()->create(array(
+        'type'         => 'fridge_magnet',
+        'url'          => 'http://example.com/photo.jpg',
+        'file'         => './path/to/file,
+        'copies'       => 1,
+        'sizing'       => 'ShrinkToFit',
+        'price'        => 200,
+        'priceToUser'  => 240,
+        'attributes'   => array(),
+    ));
 
     //delete a photo
-    $pwinty->deletePhoto(
-        "1234",             //order id
-        "123456"            //photo id
-    );
+    $order = $pwinty->orders()->find( 123 );
+
+    $photo = $order->photos()->find( 123 );
+
+    $photo->destroy();

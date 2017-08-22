@@ -1,8 +1,12 @@
 {
-    "name": "pwinty/php-pwinty",
+    "name": "dgoring/PHPPwinty",
     "description": "PHP API wrapper for Pwinty.com",
     "keywords": ["pwinty", "pwinty.com", "api"],
     "license": "CC-BY-3.0",
+    "require": {
+        "php": ">=5.6.0",
+        "ext-curl": "*"
+    },
     "authors": [
         {
             "name": "Brad Pineau",
@@ -17,11 +21,16 @@
             "name": "Andy Wright",
             "homepage": "https://github.com/atwright147",
             "role": "Developer"
+        },
+        {
+            "name": "David Goring",
+            "homepage": "https://github.com/dgoring",
+            "role": "Developer"
         }
     ],
     "autoload": {
         "psr-0" : {
-            "pwinty\\" : "src/"
+            "Pwinty\\" : "src/"
         }
     }
 }
