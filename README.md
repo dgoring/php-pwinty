@@ -1,4 +1,4 @@
-# PHP Pwinty
+# PHP Pwinty v3.0
 
 A PHP implementation of the Pwinty HTTP API v2.1
 

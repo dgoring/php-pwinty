@@ -9,6 +9,11 @@
     },
     "authors": [
         {
+            "name": "David L.J Goring",
+            "homepage": "https://github.com/dgoring",
+            "role": "Developer"
+        },
+        {
             "name": "Brad Pineau",
             "role": "Developer"
         },
@@ -20,11 +25,6 @@
         {
             "name": "Andy Wright",
             "homepage": "https://github.com/atwright147",
-            "role": "Developer"
-        },
-        {
-            "name": "David Goring",
-            "homepage": "https://github.com/dgoring",
             "role": "Developer"
         }
     ],
