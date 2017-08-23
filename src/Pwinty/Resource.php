@@ -65,7 +65,9 @@ class Resource
 
     $result = $this->connection->call($this->endpoint, $data, 'POST');
 
-    return $this->cast(array($result));
+    $records = $this->cast(array($result));
+
+    return reset($records);
   }
 
   protected function cast($data)
