@@ -120,7 +120,7 @@ abstract class Record
 
   public function save()
   {
-    if(count($data = self::saveData($this->getDirty())))
+    if(count($data = self::saveData($this->attributes)))
     {
       return $this->connection->call($this->path, $data, 'PUT');
     }
