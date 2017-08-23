@@ -18,7 +18,8 @@ class Order extends Record
   public static $endpoint = 'Orders';
 
   public static $resources = array(
-    'photos' => Photo::class
+    'photos' => Photo::class,
+    'issues' => Issue::class,
   );
 
   protected $attributes = array(

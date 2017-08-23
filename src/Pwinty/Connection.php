@@ -46,11 +46,11 @@ class Connection
 
     if ($this->opt['api'] == 'production')
     {
-      $this->endpoint = 'https://api.pwinty.com/v2.1';
+      $this->endpoint = 'https://api.pwinty.com/v2.3';
     }
     else
     {
-      $this->endpoint = 'https://sandbox.pwinty.com/v2.1';
+      $this->endpoint = 'https://sandbox.pwinty.com/v2.3';
     }
   }
 
@@ -76,6 +76,7 @@ class Connection
 
     $ch = curl_init( $url );
 
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 30);
@@ -106,6 +107,10 @@ class Connection
           $headers[] = 'Content-Type: application/json';
           $data = json_encode($data);
         }
+        else
+        {
+          $data = $this->multipartFormData($data);
+        }
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
       }
@@ -130,6 +135,37 @@ class Connection
 
     $data = json_decode($result_text, true);
     return $data;
+  }
+
+  private function multipartFormData($array, $parent = null)
+  {
+    $parent = $parent ?: array();
+    $final  = array();
+
+    foreach($array as $name => $value)
+    {
+      $naming = array_merge($parent, array($name));
+
+      if(is_array($value))
+      {
+        $final = array_merge($final, $this->multipartFormData($value, $naming));
+      }
+      else
+      {
+        $name  = '';
+        $first = true;
+
+        for($n = 0; $n < count($naming); $n++)
+        {
+          $name .= $first ? $naming[ $n ] : '[' . $naming[ $n ] . ']';
+          $first = false;
+        }
+
+        $final[ $name ] = $value;
+      }
+    }
+
+    return $final;
   }
 
   /**

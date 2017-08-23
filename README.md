@@ -1,8 +1,6 @@
 # PHP Pwinty v3.0
 
-A PHP implementation of the Pwinty HTTP API v2.1
-
-Based on an implementation of API v1 by Brad Pineau
+A PHP implementation of the Pwinty HTTP API v2.3
 
 ## Installation
 
@@ -10,7 +8,7 @@ Based on an implementation of API v1 by Brad Pineau
 
 Add the following to the require section of your composer.json file:
 
-    "dgoring/php-pwinty": "dev-master"
+    "dgoring/php-pwinty": "^3.0"
 
 Declare a new instance of php-pwinty
 
@@ -42,7 +40,7 @@ Orders
     $order = $pwinty->orders()->find( 123 );
 
     //creates a new order
-    $order = $pwinty->orders()->create(
+    $order = $pwinty->orders()->create(array(
         'name'                   => 'Chuck Norris',
         'email'                  => 'chuck@norris.com',
         'address_1'              => '123 Some Road',
@@ -55,9 +53,9 @@ Orders
         'useTrackedShipping'     => true,
         'payment'                => 'InvoiceMe',
         'qualityLevel'           => 'Pro'
-    );
+    ));
 
-    //updates an order
+    //edit an order
     $order = $pwinty->orders()->find( 123 );
 
     $order->name = 'Bob';
@@ -107,9 +105,54 @@ Photos
         'attributes'   => array(),
     ));
 
+    //edit a photo
+    $photo->assign(array(
+        'copies'       => 1,
+        'sizing'       => 'ShrinkToFit',
+    ));
+
+    $photo->save();
+
     //delete a photo
     $order = $pwinty->orders()->find( 123 );
 
     $photo = $order->photos()->find( 123 );
 
     $photo->destroy();
+
+Issues
+
+    //gets information about issues for an order
+    $order = $pwinty->orders()->find( 123 );
+
+    $issues = $order->issues()->get();
+
+    //gets information about a single issue
+    $order = $pwinty->orders()->find( 123 );
+
+    $issue = $order->issues()->find( 123 );
+
+    //adds a issue
+    $order = $pwinty->orders()->find( 123 );
+
+    $issue = $order->issues()->create(array(
+        'issue'          => 'WrongFrameColour',
+        'issueDetail'    => 'It wasn\'t pink!',
+        'action'         => 'Reprint',
+        'actionDetail'   => 'Needs to be PINK!',
+        'affectedImages' => '123,673,123',
+    ));
+
+    //edit a issue
+    $issue->assign(array(
+       'comment' => 'Still not Pink',
+    ));
+
+    $issue->save();
+
+    //delete a issue
+    $order = $pwinty->orders()->find( 123 );
+
+    $issue = $order->issues()->find( 123 );
+
+    $issue->destroy();
