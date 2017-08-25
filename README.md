@@ -105,14 +105,6 @@ Photos
         'attributes'   => array(),
     ));
 
-    //edit a photo
-    $photo->assign(array(
-        'copies'       => 1,
-        'sizing'       => 'ShrinkToFit',
-    ));
-
-    $photo->save();
-
     //delete a photo
     $order = $pwinty->orders()->find( 123 );
 
