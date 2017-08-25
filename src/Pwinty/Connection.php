@@ -74,12 +74,12 @@ class Connection
     $headers[] = 'X-Pwinty-MerchantId: '   . $this->opt['merchantId'];
     $headers[] = 'X-Pwinty-REST-API-Key: ' . $this->opt['apiKey'];
 
-    $ch = curl_init( $url );
+    $request = curl_init( $url );
 
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+    curl_setopt($request, CURLOPT_VERBOSE, true);
+    curl_setopt($request, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($request, CURLOPT_TIMEOUT, 30);
 
     if($method == 'GET')
     {
@@ -87,8 +87,8 @@ class Connection
     }
     else
     {
-      curl_setopt($ch, CURLOPT_POST, true);
-      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+      curl_setopt($request, CURLOPT_POST, true);
+      curl_setopt($request, CURLOPT_CUSTOMREQUEST, $method);
 
       if(count($data))
       {
@@ -112,28 +112,43 @@ class Connection
           $data = $this->multipartFormData($data);
         }
 
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($request, CURLOPT_POSTFIELDS, $data);
       }
     }
 
-    curl_setopt($ch, CURLOPT_FAILONERROR   , 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($ch, CURLOPT_USERAGENT, "PHPPwinty v3");
+    curl_setopt($request, CURLOPT_FAILONERROR   , 0);
+    curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt($request, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($request, CURLOPT_USERAGENT, "PHPPwinty v3");
 
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($request, CURLOPT_HTTPHEADER, $headers);
 
-    $result_text = curl_exec($ch);
-    $curl_request_info = curl_getinfo($ch);
-    curl_close($ch);
+    $content = curl_exec($request);
+    $response_header = curl_getinfo($request);
+    curl_close($request);
 
-    if ($curl_request_info["http_code"] == 401)
+    $data = json_decode($content);
+
+    if (floor($response_header["http_code"] / 200) != 1)
     {
-      $this->last_error = "Authorization unsuccessful. Check your Merchant ID and API key.";
-      return array();
+      switch($response_header["http_code"])
+      {
+        case 400:
+          // Do Nothing
+        break;
+        case 401:
+          throw new \Exception('Un-Authorized: Check your Merchant ID and API key.');
+        case 403:
+          throw new \Exception('Forbidden: Invalid Request for Resource');
+        case 404:
+          throw new \Exception('Not Found');
+        case 500:
+          throw new \Exception('Server Error');
+        default:
+          throw new \Exception('Unknown Error');
+      }
     }
 
-    $data = json_decode($result_text, true);
     return $data;
   }
 
