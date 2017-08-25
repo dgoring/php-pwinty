@@ -132,7 +132,7 @@ abstract class Record
   {
     $data = array();
 
-    if(static::$readonly !== false)
+    if(static::$readonly === true)
     {
       throw new \Exception('Resource is Read Only');
     }
