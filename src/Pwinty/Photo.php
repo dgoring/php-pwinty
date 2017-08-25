@@ -21,6 +21,12 @@ class Photo extends Record
     'file' => 'file',
   );
 
+  public static $readonly = array(
+    'price',
+    'previewUrl',
+    'thumbnailUrl',
+  );
+
   protected $attributes = array(
     'type'         => null,
     'url'          => null,
@@ -28,10 +34,7 @@ class Photo extends Record
     'md5Hash'      => null,
     'copies'       => null,
     'sizing'       => null,
-    'price'        => null,
     'priceToUser'  => null,
-    'previewUrl'   => null,
-    'thumbnailUrl' => null,
     'attributes'   => array(),
   );
 }

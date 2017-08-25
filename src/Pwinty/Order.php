@@ -22,6 +22,13 @@ class Order extends Record
     'issues' => Issue::class,
   );
 
+  public static $readonly = array(
+    'shippingInfo',
+    'price',
+    'status',
+    'paymentUrl',
+  );
+
   protected $attributes = array(
     'recipientName'          => null,
     'email'                  => null,

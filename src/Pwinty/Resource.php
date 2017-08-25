@@ -18,6 +18,7 @@ class Resource
   private $connection;
   private $endpoint;
   private $class;
+  private $data;
 
   /**
    * The class constructor
@@ -32,15 +33,30 @@ class Resource
     $this->endpoint   = $endpoint . $class::$endpoint;
   }
 
+  public function setData($data)
+  {
+    $this->data = $data;
+  }
+
   public function get($data = array())
   {
-    $result = $this->connection->call($this->endpoint, $data, 'GET');
+    $result = $this->data ?: $this->connection->call($this->endpoint, $data, 'GET');
 
     return $this->cast($result);
   }
 
   public function find($id, $load = true)
   {
+    $records = null;
+
+    if($this->data)
+    {
+      $class = $this->class;
+      $records = array_filter($this->data, function($record)use($id, $class){
+        return $record->{ $class::$key } == $id;
+      });
+    }
+    else
     if($load)
     {
       $result = $this->connection->call($this->endpoint . '/' . $id, array(), 'GET');
@@ -52,7 +68,7 @@ class Resource
       $result = array($class::$key => $id);
     }
 
-    $records = $this->cast(array($result));
+    $records = $records ?: $this->cast(array($result));
 
     return reset($records);
   }

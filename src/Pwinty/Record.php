@@ -23,6 +23,8 @@ abstract class Record
 
   public static $cast = array();
 
+  public static $readonly = array();
+
   /**
    * Casts:
    *
@@ -40,6 +42,8 @@ abstract class Record
 
   protected $path;
 
+  protected $resource_data = array();
+
   /**
    * The class constructor
    */
@@ -49,7 +53,7 @@ abstract class Record
     $this->connection = $connection;
 
     $this->assign($attributes);
-    $this->original = $attributes;
+    $this->original = $this->attributes;
 
     $this->path = $path . '/' . $this->{ static::$key };
   }
@@ -76,16 +80,34 @@ abstract class Record
   {
     if(array_key_exists($name, static::$resources))
     {
-      return new Resource(
+      $resource = new Resource(
         $this->connection,
         static::$resources[ $name ],
         $this->path . '/'
       );
+
+      if(isset($this->resource_data[ $name ]))
+      {
+        $resource->setData($this->resource_data[ $name ]);
+      }
+
+      return $resource;
     }
   }
 
   public function assign($data)
   {
+    $data = (array)$data;
+
+    foreach(static::$resources as $key => $class)
+    {
+      if(isset($data[ $key ]))
+      {
+        $this->resource_data[ $key ] = $data[ $key ];
+        unset($data[ $key ]);
+      }
+    }
+
     $this->attributes = array_merge($this->attributes, $data);
 
     return $this;
@@ -109,6 +131,15 @@ abstract class Record
   public static function saveData($input)
   {
     $data = array();
+
+    if(static::$readonly !== false)
+    {
+      throw new \Exception('Resource is Read Only');
+    }
+
+    $input = array_filter($input, function($key){
+      return !in_array($key, static::$readonly);
+    }, ARRAY_FILTER_USE_KEY);
 
     foreach($input as $name => $value)
     {
